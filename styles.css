@@ -1,0 +1,83 @@
+/* styles.css - ajustes y responsive Android */
+
+/* --- reset / base --- */
+:root {
+  --touch-size: 44px; /* tamaño recomendado para elementos táctiles */
+}
+
+/* aumenta hit area en botones 'touchable' */
+.touchable {
+  -webkit-tap-highlight-color: transparent;
+  padding: 8px;
+  min-width: var(--touch-size);
+  min-height: var(--touch-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* PROMETEO title styling (puedes ajustar) */
+.prometeo-title {
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+/* HEADER root tweaks para que quede pegado a la esquina en pantallas pequeñas */
+.header-root {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+/* Mobile menu styles (animación simple) */
+.mobile-menu {
+  transition: max-height 220ms ease, opacity 180ms ease;
+}
+
+/* Cuando se muestre, gestionado por JS (clase .open) */
+.mobile-menu.open {
+  display: block;
+}
+
+/* Pequeños ajustes para mejor lectura en Android */
+@media (max-width: 480px) {
+  body { font-size: 15px; }
+
+  .prometeo-title {
+    font-size: 1rem; /* más compacto */
+    font-weight: 800;
+  }
+
+  /* Cards: simplificar paddings en pantallas muy pequeñas */
+  .container .rounded-xl.p-6 {
+    padding: 0.9rem;
+  }
+
+  /* Textareas y botones: aumentar hit area */
+  textarea.form-textarea {
+    min-height: 120px;
+    padding: 0.8rem;
+    font-size: 14px;
+  }
+
+  button { min-height: 44px; }
+
+  /* Asegurar que el header no ocupe mucho espacio vertical */
+  .header-root { padding-top: 0.6rem; padding-bottom: 0.6rem; }
+}
+
+/* Dark-mode adjustments (si se usa class="dark" en body) */
+body.dark .header-root {
+  background-color: rgba(16,25,34,0.9);
+}
+
+/* Accessibility: focus outlines */
+a:focus, button:focus, textarea:focus {
+  outline: 3px solid rgba(19,127,236,0.14);
+  outline-offset: 2px;
+}
+
+/* Optional: hacer que el logo/titulo se mantenga compacto en tamaños muy pequeños */
+@media (max-width: 360px) {
+  .prometeo-title { font-size: 0.95rem; }
+  .header-root .w-10.h-10 { width: 36px; height: 36px; }
+}

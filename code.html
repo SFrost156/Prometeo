@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PROMETEO - Dashboard</title>
+
+  <!-- Tailwind (CDN, mantiene utilidades) -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+  <!-- Tailwind config (mantener) -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#137fec",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Public Sans"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+
+  <!-- Archivo de estilos personalizado -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
+
+  <div class="flex flex-col min-h-screen">
+    <!-- HEADER -->
+    <header class="header-root flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-4 sm:px-10 py-3 sticky top-0 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-sm z-20">
+      <!-- Left: PROMETEO (logo + texto) -->
+      <div class="flex items-center gap-3">
+        <!-- opcional: icono cuadrado -->
+        <div class="flex items-center justify-center w-10 h-10 rounded-md bg-primary text-white shrink-0">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z" fill="currentColor"></path></svg>
+        </div>
+
+        <!-- Texto PROMETEO (visible en todos los tamaños) -->
+        <a href="#" class="prometeo-title text-lg sm:text-xl font-black tracking-tight text-slate-900 dark:text-white">PROMETEO</a>
+      </div>
+
+      <!-- Right: nav + actions -->
+      <div class="flex items-center gap-4">
+        <!-- Nav (desktop) -->
+        <nav id="main-nav" class="hidden md:flex items-center gap-6">
+          <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#">Inicio</a>
+          <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#">Reportes</a>
+          <a class="text-sm font-medium text-primary dark:text-primary" href="#">Estadísticas</a>
+          <a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#">Ayuda</a>
+        </nav>
+
+        <!-- acciones: notificaciones + avatar -->
+        <div class="hidden sm:flex items-center gap-3">
+          <button class="p-2 rounded-full touchable hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" aria-label="Notificaciones">
+            <span class="material-symbols-outlined text-slate-600 dark:text-slate-400">notifications</span>
+          </button>
+          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 h-10 border-2 border-slate-200 dark:border-slate-700"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVfTTY0zvXCcICc3AHFO8dHQTr6jqVVhuNOdt7fRQ5U9ya-MVTqgqxZhVXHHsm1R4yNxHbmTP2X9Auazg1Ts2rCgJLqM-0gFocgvEiUCmxoV8AJqfIXdK4fS_p4BimsYw_XFn4Q04SYCapR9Md_wfCbj0pgmSIMQoSOuV19TQ4KtM4Jzo376wAcUHB8tlm0lf0G3EIDnlehob2-bkCsO7CvmVyCQCqNqB8XjBqXeUZ-3iAY_2jvhND9w6TmpTVUKbrYFvvcN-0BrLo");'>
+          </div>
+        </div>
+
+        <!-- Mobile: hamburger -->
+        <button id="hamburger" class="md:hidden p-2 rounded-md touchable focus:outline-none" aria-label="Abrir menú">
+          <svg id="hamburger-open" class="w-6 h-6 text-slate-800 dark:text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/></svg>
+          <svg id="hamburger-close" class="w-6 h-6 text-slate-800 dark:text-slate-200 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile menu panel (aparece debajo del header en móvil) -->
+    <div id="mobile-menu" class="mobile-menu hidden md:hidden border-b border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark/95 px-4 pb-4">
+      <nav class="flex flex-col gap-2 py-2">
+        <a class="block text-base font-medium py-2 px-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" href="#">Inicio</a>
+        <a class="block text-base font-medium py-2 px-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" href="#">Reportes</a>
+        <a class="block text-base font-medium py-2 px-2 rounded-md text-primary" href="#">Estadísticas</a>
+        <a class="block text-base font-medium py-2 px-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" href="#">Ayuda</a>
+      </nav>
+    </div>
+
+    <!-- MAIN CONTENT (mantengo tu estructura, puedes ajustar) -->
+    <main class="flex-1">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div class="lg:col-span-2 space-y-8">
+            <h1 class="text-4xl font-black tracking-tighter text-slate-900 dark:text-white">Resumen de Incidentes</h1>
+
+            <!-- cards resumen -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800">
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total de Reportes</p>
+                <p class="text-3xl font-bold text-slate-900 dark:text-white">1,250</p>
+              </div>
+
+              <div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800">
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Reportes Resueltos</p>
+                <p class="text-3xl font-bold text-slate-900 dark:text-white">975</p>
+              </div>
+
+              <div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800">
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Tiempo Promedio de Resolución</p>
+                <p class="text-3xl font-bold text-slate-900 dark:text-white">3 días</p>
+              </div>
+            </div>
+
+            <!-- resto del contenido (mantengo SVGs y secciones) -->
+            <div class="space-y-6">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Análisis de Incidentes</h2>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex flex-col gap-4 rounded-xl border border-slate-200 dark:border-slate-800 p-6 bg-white dark:bg-slate-900 shadow-sm">
+                  <p class="text-base font-medium text-slate-800 dark:text-slate-200">Distribución por Tipo</p>
+                  <div class="grid min-h-[200px] grid-flow-col gap-4 items-end justify-items-center px-3 pt-4">
+                    <!-- barras (mismo diseño que tenías) -->
+                    <div class="flex flex-col items-center gap-2 w-full">
+                      <div class="w-full h-36 bg-primary/20 dark:bg-primary/30 rounded flex items-end"><div class="w-full h-[70%] bg-primary rounded-t"></div></div>
+                      <p class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">Vandalismo</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 w-full">
+                      <div class="w-full h-36 bg-primary/20 dark:bg-primary/30 rounded flex items-end"><div class="w-full h-[80%] bg-primary rounded-t"></div></div>
+                      <p class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">Accidentes Vehiculares</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 w-full">
+                      <div class="w-full h-36 bg-primary/20 dark:bg-primary/30 rounded flex items-end"><div class="w-full h-[30%] bg-primary rounded-t"></div></div>
+                      <p class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">Hurto</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-4 rounded-xl border border-slate-200 dark:border-slate-800 p-6 bg-white dark:bg-slate-900 shadow-sm">
+                  <p class="text-base font-medium text-slate-800 dark:text-slate-200">Reportes a lo largo del tiempo</p>
+                  <div class="flex min-h-[200px] flex-1 flex-col gap-6 py-4">
+                    <!-- SVG del gráfico -->
+                    <svg fill="none" height="100%" preserveAspectRatio="none" viewBox="0 0 472 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H0V109Z" fill="url(#paint0_linear_chart)"></path>
+                      <path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#137fec" stroke-linecap="round" stroke-width="3"></path>
+                      <defs><linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_chart" x1="236" x2="236" y1="1" y2="149"><stop stop-color="#137fec" stop-opacity="0.3"></stop><stop offset="1" stop-color="#137fec" stop-opacity="0"></stop></linearGradient></defs>
+                    </svg>
+
+                    <div class="flex justify-around">
+                      <p class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">Ene</p>
+                      <p class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">Feb</p>
+                      <p class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">Mar</p>
+                      <p class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">Abr</p>
+                      <p class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">May</p>
+                      <p class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">Jun</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Ubicación de Incidentes</h2>
+              <div class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm">
+                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAIGD55pPcslvJ2T-GsPc9mOxHnS03TlgeRwgitW_MC0_NjfX91PQbARLozV_HesZonTLjhM8J0MNAz30ZPBH1kw5W5uBLpyXNmUzQDefYcF1juy10A_5f9c3OsqVz7kyKYjUVriRFsI0LYT4LEAfK5UO_fI3pmUzEZBKWhOR7DmK7NrN8YqfnsbyTSrr42KkmO8Qd6fM8Na3Z719A-oYsYQ5-0ZL9Q1-JwKmACL-gS5DiGmSMKOxWgwwGcykErjx7ox_MEOsZDh_5o");'></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ASIDE -->
+          <aside class="lg:col-span-1 space-y-6 lg:sticky lg:top-24 h-fit">
+            <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-6 bg-white dark:bg-slate-900 shadow-sm space-y-4">
+              <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-3xl">smart_toy</span>
+                <h3 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Asistente de Reportes</h3>
+              </div>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Pregúntale al asistente sobre los datos de incidentes y obtén recomendaciones.</p>
+              <div class="flex flex-col gap-4">
+                <textarea class="form-textarea flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary border border-slate-300 dark:border-slate-700 bg-background-light dark:bg-background-dark min-h-36 placeholder:text-slate-400 dark:placeholder:text-slate-500 p-3 text-sm" placeholder="Escribe tu pregunta aquí..."></textarea>
+                <button class="flex w-full items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold tracking-wide hover:bg-primary/90 transition-colors">
+                  <span>Enviar</span>
+                </button>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Archivo JS -->
+  <script src="app.js"></script>
+</body>
+</html>
